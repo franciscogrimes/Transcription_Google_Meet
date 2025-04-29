@@ -1,0 +1,25 @@
+name: Rodar script diário
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 16 * * 1-5'   # 13:00 BRT (UTC-3) de segunda a sexta
+    - cron: '0 21 * * 1-5'   # 18:00 BRT (UTC-3) de segunda a sexta
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Instalar dependências
+        run: npm install
+      - name: Criar arquivo de credenciais
+        run: |
+          echo "$GOOGLE_CREDENTIALS_JSON" > src/credentials.json
+        env:
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+      - name: Executar script
+        run: node src/index.js
+        env:
+          SENSEDATA_TOKEN: ${{ secrets.SENSEDATA_TOKEN }}
+          FOLDER_ID: ${{ secrets.FOLDER_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          FOLDER_ID_PARENT: ${{ secrets.FOLDER_ID_PARENT }}

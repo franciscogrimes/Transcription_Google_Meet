@@ -1,0 +1,15 @@
+# Ignora variáveis de ambiente
+.env
+
+# Ignora credenciais específicas
+src/credentials.json
+
+
+# Ignora a pasta node_modules (caso ainda não esteja)
+node_modules/
+
+# Ignora arquivos de chave comuns
+*.key
+*.pem
+*.crt
+

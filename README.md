@@ -1,4 +1,4 @@
-# Transcription processor
+# Transcription_Google_Meet
 
 Este projeto foi desenvolvido com o intuito de armazenar as transcrições do Tactiq, dentro de uma aplicação para registros de reuniões. No caso desse em específico, o local para o armaenamento da transcrição foi o Sensedata, podendo ser replicado para outras aplicações caso necessário.
 Contudo, o Tactiq não oferece uma API pública para integrações diretas. Então, foi utilizado uma integração nativa da solução com o google drive, que posteriormente segue um processo de integração.

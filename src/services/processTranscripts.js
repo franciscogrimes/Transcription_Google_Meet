@@ -143,13 +143,3 @@ async function moveFile(fileId, originalFolderId) {
 }
 
 module.exports = {listFolderFiles, extractTextFromGoogleDoc, extractShortSummary, moveFile};
-
-
-
-
-
-// Para rodar periodicamente (exemplo a cada 10 minutos)
-// const POLLING_INTERVAL_MS = 10 * 60 * 1000;
-// console.log(`Iniciando verificação periódica a cada ${POLLING_INTERVAL_MS / 1000 / 60} minutos...`);
-// setInterval(main, POLLING_INTERVAL_MS);
-// main(); // Executa uma vez imediatamente

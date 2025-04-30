@@ -2,7 +2,6 @@ name: Rodar script diário
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 16 * * 1-5'   # 13:00 BRT (UTC-3) de segunda a sexta
     - cron: '0 21 * * 1-5'   # 18:00 BRT (UTC-3) de segunda a sexta
 jobs:
   run-script:

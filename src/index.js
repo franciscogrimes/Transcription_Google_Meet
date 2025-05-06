@@ -1,7 +1,10 @@
 const {listFolderFiles} = require('./services/processTranscripts.js');
 const {extractTextFromGoogleDoc} = require('./services/processTranscripts.js');
 const {extractShortSummary} = require('./services/processTranscripts.js');
+const {extractTranscription} = require('./services/processTranscripts.js');
 const {registerTaskSenseData} = require('./services/sensedata.js');
+const {geminiRequest} = require('./services/gemini.js');
+
 
 async function main() {
     const allFiles = await listFolderFiles(process.env.FOLDER_ID);
@@ -54,6 +57,12 @@ async function main() {
                 // await moveFile(file.id, FOLDER_ID);
             } else {
                 console.log(`  Não foi possível extrair o 'Short summary' de ${file.name}.`);
+
+                const transcript = await extractTranscription(extractedText);
+                const resume = await geminiRequest(transcript)
+
+                await registerTaskSenseData(nameFormatted, resume, ownerEmail, file.name);
+
             }
         } else {
             console.log(`  Falha ao obter texto completo de ${file.name}.`);

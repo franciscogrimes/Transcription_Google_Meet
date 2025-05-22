@@ -31,7 +31,7 @@ async function geminiRequest(transcript) {
       
       // Consultar Gemini API
       const geminiResponse = await axios.post(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
           geminiRequest,
           {
               httpsAgent: new https.Agent({ rejectUnauthorized: false })

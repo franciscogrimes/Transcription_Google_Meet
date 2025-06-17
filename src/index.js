@@ -31,11 +31,11 @@ async function main() {
     for (const file of todayFiles) {
         let extractedText = null;
 
-        if (file.owners && file.owners.length > 0) {
-            console.log(`  -> Proprietário(s): ${file.owners[0].emailAddress || 'Sem email'}`);
-        } else {
-            console.log("  -> Informação de proprietário não disponível (comum em Drives Compartilhados).");
-        }
+        // if (file.owners && file.owners.length > 0) {
+        //     console.log(`  -> Proprietário(s): ${file.owners[0].emailAddress || 'Sem email'}`);
+        // } else {
+        //     console.log("  -> Informação de proprietário não disponível (comum em Drives Compartilhados).");
+        // }
 
         console.log(`\nProcessando arquivo: ${file.name} (ID: ${file.id}, Tipo: ${file.mimeType})`);
 
@@ -56,7 +56,7 @@ async function main() {
                 // Move o arquivo após sucesso na extração do summary
                 // await moveFile(file.id, FOLDER_ID);
             } else {
-                console.log(`  Não foi possível extrair o 'Short summary' de ${file.name}.`);
+                console.log(`  Não foi possível extrair o 'Short summary' de ${file.name}. Tentando resumir a transcrição...`);
 
                 const transcript = await extractTranscription(extractedText);
                 const resume = await geminiRequest(transcript)

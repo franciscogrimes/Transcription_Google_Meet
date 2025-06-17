@@ -128,7 +128,6 @@ function extractShortSummary(fullText) {
     }
 
     if (!foundSummaryStart) {
-        console.log("  -> Marcador 'Short summary' não encontrado no texto.");
         return null;
     }
 
@@ -152,48 +151,47 @@ function extractShortSummary(fullText) {
     }
 
      if (summaryLines.length === 0) {
-        console.log("  -> 'Short summary' encontrado, mas nenhum conteúdo subsequente detectado.");
-        return null;
+        return "null";
     }
 
     return summaryLines.join('\n').trim();
 }
 
-async function listFolderFilesWithOwnerInfo(folderId) {
-    try {
-        const res = await drive.files.list({
-            q: `'${folderId}' in parents and trashed=false`,
-            fields: '',
-            pageSize: 100,
-            supportsAllDrives: true,
-            includeItemsFromAllDrives: true
-        });
-        return res.data.files || [];
-    } catch (error) {
-        console.error('Erro ao listar arquivos com informações do proprietário:', error.message);
-         if (error.response) {
-             console.error('Detalhes do erro da API:', JSON.stringify(error.response.data, null, 2));
-         }
-        return [];
-    }
-}
+// async function listFolderFilesWithOwnerInfo(folderId) {
+//     try {
+//         const res = await drive.files.list({
+//             q: `'${folderId}' in parents and trashed=false`,
+//             fields: '',
+//             pageSize: 100,
+//             supportsAllDrives: true,
+//             includeItemsFromAllDrives: true
+//         });
+//         return res.data.files || [];
+//     } catch (error) {
+//         console.error('Erro ao listar arquivos com informações do proprietário:', error.message);
+//          if (error.response) {
+//              console.error('Detalhes do erro da API:', JSON.stringify(error.response.data, null, 2));
+//          }
+//         return [];
+//     }
+// }
 
 // Função para mover um arquivo para outra pasta
-async function moveFile(fileId, originalFolderId) {
-    try {
-        await drive.files.update({
-            fileId: fileId,
-            addParents: process.env.FOLDER_ID_PARENT,
-            removeParents: originalFolderId,
-            fields: 'id, parents',
-            supportsAllDrives: true
-        });
-        console.log(`  Arquivo ${fileId} movido para pasta de processados.`);
-        return true;
-    } catch (error) {
-        console.error(`  Erro ao mover arquivo ${fileId}:`, error.message);
-        return false;
-    }
-}
+// async function moveFile(fileId, originalFolderId) {
+//     try {
+//         await drive.files.update({
+//             fileId: fileId,
+//             addParents: process.env.FOLDER_ID_PARENT,
+//             removeParents: originalFolderId,
+//             fields: 'id, parents',
+//             supportsAllDrives: true
+//         });
+//         console.log(`  Arquivo ${fileId} movido para pasta de processados.`);
+//         return true;
+//     } catch (error) {
+//         console.error(`  Erro ao mover arquivo ${fileId}:`, error.message);
+//         return false;
+//     }
+// }
 
-module.exports = {listFolderFiles, extractTextFromGoogleDoc, extractShortSummary, moveFile, extractTranscription};
+module.exports = {listFolderFiles, extractTextFromGoogleDoc, extractShortSummary, extractTranscription};

@@ -30,7 +30,7 @@ async function getParentId(idCliente) {
     
     return null;
   } catch (error) {
-    console.error("Erro ao buscar o ID do parent:", error.message);
+    console.error("Erro ao buscar o ID do parent");
     return null;
   }
   
@@ -76,14 +76,24 @@ async function registerTaskSenseData(cliente, descricao, emailCliente, titulo) {
         'Authorization': `Bearer ${sensedataToken}`,
         'Content-Type': 'application/json'
       },
-      httpsAgent: new https.Agent({ rejectUnauthorized: false })
+      httpsAgent: new https.Agent({ rejectUnauthorized: false }),
+      validateStatus: status => status < 500
     });
 
     if (response.status === 202) {
       console.log('✅ Atividade registrada com sucesso no SenseData!');
       return true;
+
+    } else if(response.status === 400){
+
+        console.log(`Código de status: ${response.status}`);
+        console.log(`Mensagem: Não foi possível adicionar a atividade, pois o cliente não foi encontrado.`);
+        return true
+
     } else {
+
       throw new Error(`Código de status: ${response.status}`);
+      
     }
   } catch (error) {
     console.error('Detalhes do erro:', error.response?.data);
@@ -103,6 +113,7 @@ async function searchClientSenseData(titulo) {
         'Authorization': `Bearer ${sensedataToken}`,
       },
       httpsAgent: new https.Agent({ rejectUnauthorized: false })
+      
     });
 
     const customers = clientesResponse.data.customers;
